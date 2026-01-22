@@ -1,61 +1,92 @@
-let jogadores = [
-  { nome: "Otto", pontos: 0 },
-  { nome: "Vinicius", pontos: 0 },
-  { nome: "Emanuel", pontos: 0 },
-  { nome: "Antheus", pontos: 0 },
-  { nome: "Otavio", pontos: 0 },
-  { nome: "Victor", pontos: 0 },
-  { nome: "Carlos", pontos: 0 },
-  { nome: "Sofia", pontos: 0 }
+const ADM_LOGIN = "adm123";
+const ADM_SENHA = "adm456";
+
+let players = JSON.parse(localStorage.getItem("players")) || [
+  {nome:"Otto", kills:0, pontos:0},
+  {nome:"Vinicius", kills:0, pontos:0},
+  {nome:"Emanuel", kills:0, pontos:0},
+  {nome:"Antheus", kills:0, pontos:0},
+  {nome:"Otavio", kills:0, pontos:0},
+  {nome:"Victor", kills:0, pontos:0},
+  {nome:"Carlos", kills:0, pontos:0},
+  {nome:"Sofia", kills:0, pontos:0}
 ];
 
-function logar() {
-  const l = document.getElementById("login").value;
-  const s = document.getElementById("senha").value;
+let logs = JSON.parse(localStorage.getItem("logs")) || [];
 
-  if (l === "adm123" && s === "adm456") {
-    document.getElementById("loginTela").style.display = "none";
-    document.getElementById("painel").style.display = "block";
-    atualizarRanking();
+function abrirLogin(){
+  loginBox.style.display = loginBox.style.display==="none"?"block":"none";
+}
+
+function salvarTudo(){
+  localStorage.setItem("players", JSON.stringify(players));
+  localStorage.setItem("logs", JSON.stringify(logs));
+  alert("Dados salvos com sucesso!");
+  carregarRankingPublico();
+}
+
+function logar(){
+  if(login.value===ADM_LOGIN && senha.value===ADM_SENHA){
+    loginBox.style.display="none";
+    painelADM.style.display="block";
+    carregarSelects();
+    mostrarLogs();
   } else {
-    alert("Login ou senha incorretos!");
+    alert("Acesso negado!");
   }
 }
 
-function registrar() {
-  const nome = document.getElementById("jogador").value;
-  const pontos = parseInt(document.getElementById("missao").value);
-
-  let player = jogadores.find(j => j.nome === nome);
-  player.pontos += pontos;
-
-  atualizarRanking();
+function carregarSelects(){
+  [playerKill, playerPontos].forEach(sel=>{
+    sel.innerHTML="";
+    players.forEach(p=>{
+      sel.innerHTML+=`<option>${p.nome}</option>`;
+    });
+  });
 }
 
-function atualizarRanking() {
-  jogadores.sort((a, b) => b.pontos - a.pontos);
-  const div = document.getElementById("ranking");
-  div.innerHTML = "";
+function addKill(){
+  let p = players.find(j=>j.nome===playerKill.value);
+  p.kills++;
+  logs.push(`⚔ +1 kill para ${p.nome}`);
+}
 
-  jogadores.forEach((j, i) => {
-    div.innerHTML += `
+function addPontos(){
+  let p = players.find(j=>j.nome===playerPontos.value);
+  let val = parseInt(qtdPontos.value);
+  if(!val) return;
+  p.pontos += val;
+  logs.push(`🏆 +${val} pontos para ${p.nome}`);
+}
+
+function mostrarLogs(){
+  logBox.innerHTML = logs.slice(-10).reverse().join("<br>");
+}
+
+function carregarRankingPublico(){
+  let div = document.getElementById("rankingPublico");
+  players.sort((a,b)=> b.pontos - a.pontos);
+  div.innerHTML="";
+  players.forEach((p,i)=>{
+    div.innerHTML+=`
       <div class="rank-item">
-        <span>${i + 1}º - ${j.nome}</span>
-        <span>${j.pontos} pts</span>
+        <span>${i+1}º ${p.nome}</span>
+        <span>${p.kills}⚔️ | ${p.pontos}🏆</span>
       </div>
     `;
   });
 }
 
-function baixarRanking() {
-  let texto = "Ranking Echo Squad\n\n";
-  jogadores.forEach((j, i) => {
-    texto += `${i + 1}º - ${j.nome}: ${j.pontos} pontos\n`;
-  });
+function baixarDados(){
+  let txt = JSON.stringify(players,null,2);
+  let blob = new Blob([txt],{type:"text/plain"});
+  let a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="echo-squad-dados.txt";
+  a.click();
+}
 
-  const blob = new Blob([texto], { type: "text/plain" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "ranking-echo-squad.txt";
-  link.click();
+function abrirAba(id){
+  document.querySelectorAll(".aba").forEach(a=>a.style.display="none");
+  document.getElementById(id).style.display="block";
 }
