@@ -2,35 +2,65 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Echo Squad - Ranking</title>
+  <title>Echo Squad ADM</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>🏆 Echo Squad — Ranking Oficial</h1>
-
-<table id="ranking">
-  <thead>
-    <tr>
-      <th>Posição</th>
-      <th>Jogador</th>
-      <th>Kills</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
-
-<hr>
-
-<h2>🔐 Login Administrativo</h2>
-<input type="text" id="login" placeholder="Login">
-<input type="password" id="senha" placeholder="Senha">
-<button onclick="login()">Entrar</button>
+<div id="loginTela">
+  <h1>🔐 Echo Squad - Painel ADM</h1>
+  <input type="text" id="login" placeholder="Login">
+  <input type="password" id="senha" placeholder="Senha">
+  <button onclick="logar()">Entrar</button>
+</div>
 
 <div id="painel" style="display:none;">
-  <h2>⚙️ Painel ADM</h2>
-  <div id="editar"></div>
-  <button onclick="exportar()">Exportar Ranking</button>
+  <h1>⚙️ Painel Administrativo — Echo Squad</h1>
+  <p>ADM: Nicolas & Bernardo</p>
+
+  <h2>🎯 Registrar Missão / Conquista</h2>
+
+  <select id="jogador">
+    <option>Otto</option>
+    <option>Vinicius</option>
+    <option>Emanuel</option>
+    <option>Antheus</option>
+    <option>Otavio</option>
+    <option>Victor</option>
+    <option>Carlos</option>
+    <option>Sofia</option>
+  </select>
+
+  <select id="missao">
+    <option value="5">Primeiro Sangue (+5)</option>
+    <option value="10">Assassino (+10)</option>
+    <option value="20">Ceifador (+20)</option>
+    <option value="30">Lenda do PvP (+30)</option>
+    <option value="5">Mineiro (+5)</option>
+    <option value="5">Construtor (+5)</option>
+    <option value="10">Explorador (+10)</option>
+    <option value="15">Conquistador (+15)</option>
+    <option value="20">Rei do Mapa (+20)</option>
+    <option value="20">Senhor da Guerra (+20)</option>
+    <option value="10">Campeão (+10)</option>
+    <option value="15">Imbatível (+15)</option>
+    <option value="25">Lenda dos Eventos (+25)</option>
+  </select>
+
+  <button onclick="registrar()">Registrar Missão</button>
+
+  <h2>🏆 Ranking Atual</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Posição</th>
+        <th>Jogador</th>
+        <th>Pontos</th>
+      </tr>
+    </thead>
+    <tbody id="ranking"></tbody>
+  </table>
+
 </div>
 
 <script src="script.js"></script>
