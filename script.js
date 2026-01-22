@@ -34,16 +34,28 @@ function registrar() {
 
 function atualizarRanking() {
   jogadores.sort((a, b) => b.pontos - a.pontos);
-  const tbody = document.getElementById("ranking");
-  tbody.innerHTML = "";
+  const div = document.getElementById("ranking");
+  div.innerHTML = "";
 
   jogadores.forEach((j, i) => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${i + 1}º</td>
-        <td>${j.nome}</td>
-        <td>${j.pontos}</td>
-      </tr>
+    div.innerHTML += `
+      <div class="rank-item">
+        <span>${i + 1}º - ${j.nome}</span>
+        <span>${j.pontos} pts</span>
+      </div>
     `;
   });
+}
+
+function baixarRanking() {
+  let texto = "Ranking Echo Squad\n\n";
+  jogadores.forEach((j, i) => {
+    texto += `${i + 1}º - ${j.nome}: ${j.pontos} pontos\n`;
+  });
+
+  const blob = new Blob([texto], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "ranking-echo-squad.txt";
+  link.click();
 }
