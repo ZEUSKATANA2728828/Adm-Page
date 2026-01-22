@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Echo Squad - Ranking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🏆 Echo Squad — Ranking Oficial</h1>
+
+<table id="ranking">
+  <thead>
+    <tr>
+      <th>Posição</th>
+      <th>Jogador</th>
+      <th>Kills</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<hr>
+
+<h2>🔐 Login Administrativo</h2>
+<input type="text" id="login" placeholder="Login">
+<input type="password" id="senha" placeholder="Senha">
+<button onclick="login()">Entrar</button>
+
+<div id="painel" style="display:none;">
+  <h2>⚙️ Painel ADM</h2>
+  <div id="editar"></div>
+  <button onclick="exportar()">Exportar Ranking</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
