@@ -3,63 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Echo Squad ADM</title>
+<title>Echo Squad | Ranking Oficial</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="login" id="loginTela">
-  <h1>🎮 Echo Squad</h1>
-  <p>Painel Administrativo</p>
-  <input type="text" id="login" placeholder="Login ADM">
-  <input type="password" id="senha" placeholder="Senha">
-  <button onclick="logar()">Entrar</button>
+<!-- LOADING -->
+<div id="loader" class="loader">
+  <div class="spinner"></div>
+  <p>Carregando Echo Squad...</p>
 </div>
 
-<div class="painel" id="painel" style="display:none;">
-  <h2>⚙️ Painel ADM</h2>
-  <p>Nicolas & Bernardo</p>
+<header>
+  <h1>Echo Squad</h1>
+  <p>Ranking Oficial</p>
+</header>
 
-  <div class="card">
-    <h3>🎯 Registrar Missão</h3>
+<div class="container" id="conteudo" style="display:none;">
 
-    <select id="jogador">
-      <option>Otto</option>
-      <option>Vinicius</option>
-      <option>Emanuel</option>
-      <option>Antheus</option>
-      <option>Otavio</option>
-      <option>Victor</option>
-      <option>Carlos</option>
-      <option>Sofia</option>
-    </select>
+  <!-- RANKING PUBLICO -->
+  <div id="rankingPublico"></div>
 
-    <select id="missao">
-      <option value="5">Primeiro Sangue (+5)</option>
-      <option value="10">Assassino (+10)</option>
-      <option value="20">Ceifador (+20)</option>
-      <option value="30">Lenda do PvP (+30)</option>
-      <option value="5">Mineiro (+5)</option>
-      <option value="5">Construtor (+5)</option>
-      <option value="10">Explorador (+10)</option>
-      <option value="15">Conquistador (+15)</option>
-      <option value="20">Rei do Mapa (+20)</option>
-      <option value="20">Senhor da Guerra (+20)</option>
-      <option value="10">Campeão (+10)</option>
-      <option value="15">Imbatível (+15)</option>
-      <option value="25">Lenda dos Eventos (+25)</option>
-    </select>
+  <!-- BOTÃO LOGIN ADM -->
+  <button id="btnLogin" onclick="abrirLogin()">🔒 Login ADM</button>
 
-    <button onclick="registrar()">Registrar</button>
+  <!-- PAINEL LOGIN -->
+  <div id="loginBox" class="card" style="display:none;">
+    <h3>Login Administrativo</h3>
+    <input type="text" id="login" placeholder="Login">
+    <input type="password" id="senha" placeholder="Senha">
+    <button onclick="logar()">Entrar</button>
   </div>
 
-  <div class="card">
-    <h3>🏆 Ranking</h3>
-    <div id="ranking"></div>
-    <button onclick="baixarRanking()">📥 Baixar Ranking</button>
+  <!-- PAINEL ADM -->
+  <div id="painelADM" style="display:none;">
+
+    <div class="tabs">
+      <button onclick="abrirAba('controle')">⚙ Controle</button>
+      <button onclick="abrirAba('ajuda')">📖 Como Usar</button>
+    </div>
+
+    <div id="controle" class="aba">
+      <div class="card">
+        <h3>⚔ Registrar Kill</h3>
+        <select id="playerKill"></select>
+        <button onclick="addKill()">+ Kill</button>
+      </div>
+
+      <div class="card">
+        <h3>🏆 Registrar Pontos</h3>
+        <select id="playerPontos"></select>
+        <input type="number" id="qtdPontos" placeholder="Pontos">
+        <button onclick="addPontos()">Adicionar</button>
+      </div>
+
+      <div class="card">
+        <h3>📜 Histórico</h3>
+        <div id="logBox"></div>
+      </div>
+
+      <button onclick="salvarTudo()">💾 Salvar</button>
+      <button onclick="baixarDados()">📥 Baixar Dados</button>
+    </div>
+
+    <div id="ajuda" class="aba" style="display:none;">
+      <div class="card">
+        <h3>📖 Como usar o sistema Echo Squad</h3>
+        <p>1️⃣ ADM faz login.</p>
+        <p>2️⃣ Use os botões para registrar kills e pontos.</p>
+        <p>3️⃣ Clique em 💾 Salvar para guardar tudo.</p>
+        <p>4️⃣ Os membros veem o ranking automaticamente.</p>
+        <p>5️⃣ Nunca registre dados falsos.</p>
+      </div>
+    </div>
+
   </div>
+
 </div>
 
 <script src="script.js"></script>
+<script>
+setTimeout(()=>{
+  loader.style.display="none";
+  conteudo.style.display="block";
+  carregarRankingPublico();
+},1200);
+</script>
 </body>
 </html>
